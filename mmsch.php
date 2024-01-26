@@ -10,6 +10,15 @@ Author: sugarvag
 function enqueue_table_scripts() {
     wp_enqueue_script('jquery');
     wp_enqueue_script('datatables', 'https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js', array('jquery'), '1.13.6');
+	
+	wp_enqueue_script('datatables-buttons', 'https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js', array('jquery'), '2.4.1');
+    wp_enqueue_script('jszip', 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js', array(), '3.10.1');
+    wp_enqueue_script('pdfmake', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js', array(), '0.1.53');
+    wp_enqueue_script('pdfmake-vfs-fonts', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js', array(), '0.1.53');
+    wp_enqueue_script('buttons-html5', 'https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js', array('jquery', 'datatables-buttons'), '2.4.1');
+    wp_enqueue_script('buttons-print', 'https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js', array('jquery', 'datatables-buttons'), '2.4.1');
+    wp_enqueue_style('buttons-css', 'https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css', array(), '2.4.1');
+	
     wp_enqueue_style('datatables-css', 'https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css');
 }
 add_action('wp_enqueue_scripts', 'enqueue_table_scripts');
@@ -96,7 +105,20 @@ function render_table($atts) {
 				language: {
 					url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/el.json",
 				},
-				order: [[0, "asc"]]
+				order: [[0, "asc"]],
+				dom: "Bfrtlip",
+				buttons: [
+					{
+                    extend: "excel"
+					},
+					{
+						extend: "pdf",
+						orientation: "landscape" // Set orientation to landscape
+					},
+					{
+						extend: "print"
+					}
+				]
 			});
         });
         </script>';
